@@ -1,8 +1,10 @@
 import random
 
+# Função para inicializar o tabuleiro vazio
 def inicializarTabuleiro():
     return [[' ' for _ in range(3)] for _ in range(3)]
 
+# Função para imprimir o tabuleiro na tela
 def imprimirTabuleiro(tabuleiro):
     print("   0   1   2")
     for i, linha in enumerate(tabuleiro):
@@ -10,15 +12,19 @@ def imprimirTabuleiro(tabuleiro):
         if i < 2:
             print("  " + "-" * 11)
 
+# Função para imprimir o menu principal
 def imprimeMenuPrincipal():
     print("Escolha o modo de jogo:\n1. Jogador vs Jogador\n2. Jogador vs Máquina (Nível Fácil)")
 
+# Função para ler uma coordenada digitada pelo usuário
 def leiaCoordenada(mensagem):
     return int(input(mensagem))
 
+# Função para verificar se uma posição é válida
 def posicaoValida(tabuleiro, linha, coluna):
     return 0 <= linha < 3 and 0 <= coluna < 3 and tabuleiro[linha][coluna] == ' '
 
+# Função para verificar se um jogador venceu o jogo
 def verificaVencedor(tabuleiro, jogador):
     for linha in tabuleiro:
         if all(pos == jogador for pos in linha):
@@ -28,13 +34,16 @@ def verificaVencedor(tabuleiro, jogador):
             return True
     return all(tabuleiro[i][i] == jogador for i in range(3)) or all(tabuleiro[i][2 - i] == jogador for i in range(3))
 
+# Função para verificar se o jogo terminou em empate
 def verificaVelha(tabuleiro):
     return all(pos != ' ' for linha in tabuleiro for pos in linha)
 
+# Função para realizar uma jogada
 def jogar(tabuleiro, linha, coluna, jogador):
     if posicaoValida(tabuleiro, linha, coluna):
         tabuleiro[linha][coluna] = jogador
 
+# Função para a jogada do usuário
 def jogadaUsuario(tabuleiro, jogador):
     while True:
         linha = leiaCoordenada("Digite a coordenada da linha: ")
@@ -45,12 +54,14 @@ def jogadaUsuario(tabuleiro, jogador):
         else:
             print("Posição inválida. Tente novamente.")
 
+# Função para a jogada da máquina no modo fácil
 def jogadaMaquinaFacil(tabuleiro):
     linha, coluna = random.randint(0, 2), random.randint(0, 2)
     while not posicaoValida(tabuleiro, linha, coluna):
         linha, coluna = random.randint(0, 2), random.randint(0, 2)
     jogar(tabuleiro, linha, coluna, 'O')
 
+# Função principal do jogo
 def main():
     while True:
         imprimeMenuPrincipal()
@@ -102,5 +113,6 @@ def main():
         if resposta != 's':
             break
 
+# Verifica se o script está sendo executado diretamente e, se sim, chama a função main()
 if __name__ == "__main__":
     main()
